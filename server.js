@@ -330,12 +330,3 @@ setInterval(() => {
 }, 60 * 1000);
 
 app.listen(PORT, () => console.log(`✅ Server listening on port ${PORT}`));
-
-
-app.get('/api/debug-session', (req, res) => {
-  res.json({
-    hasSession: !!req.session,
-    manager: req.session?.manager || false,
-    cookie: req.headers.cookie || 'no-cookie'
-  });
-});
