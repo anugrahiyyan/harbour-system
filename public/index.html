@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🛳️ Harbour A — Staff Record</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-sky-50 to-blue-100">
+  <main class="container max-w-2xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center text-sky-700 mb-6">
+      🛳️ Incoming Ship Record (Harbour A)
+    </h1>
+
+    <div class="glass-card p-6 rounded-2xl shadow-lg fade-in">
+      <form id="shipForm" class="space-y-4">
+        <!-- Ship Details -->
+        <section>
+          <h2 class="section-title">Ship Details</h2>
+          <div class="form-group">
+            <label for="shipName">Ship Name</label>
+            <input type="text" id="shipName" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="shipType">Ship Type</label>
+            <input type="text" id="shipType" class="form-input" placeholder="e.g., Cargo, Passenger" required>
+          </div>
+
+          <div class="form-group">
+            <label for="shipCode">Ship Code</label>
+            <input type="text" id="shipCode" class="form-input" placeholder="e.g., HBR1234" required>
+          </div>
+        </section>
+
+        <!-- Cargo Details -->
+        <section>
+          <h2 class="section-title">Cargo Details</h2>
+          <div class="form-group">
+            <label for="cargoType">Cargo Type</label>
+            <select id="cargoType" class="form-input" required>
+              <option value="">-- Select Cargo Type --</option>
+              <option value="Fish">Fish</option>
+              <option value="Train">Train</option>
+              <option value="Fruits">Fruits</option>
+              <option value="Military">Military Things</option>
+            </select>
+          </div>
+
+          <div class="form-group hidden" id="fishSubTypeGroup">
+            <label for="cargoSubType">Fish Type</label>
+            <select id="cargoSubType" class="form-input">
+              <option value="">-- Select Fish Type --</option>
+              <option value="Lele">Lele</option>
+              <option value="Mujair">Mujair</option>
+              <option value="Hiu">Hiu</option>
+              <option value="Badut">Badut</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cargoAmount">Amount of Cargo</label>
+            <input type="number" id="cargoAmount" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cargoDescription">Additional Description</label>
+            <textarea id="cargoDescription" class="form-input" rows="3"></textarea>
+          </div>
+        </section>
+
+        <button class="submit-btn" id="submitBtn">
+          <i class="bi bi-send"></i>
+          <span id="submitText">Submit Record</span>
+        </button>
+      </form>
+
+      <div class="mt-4 text-center text-sm text-gray-500">
+        <a href="/manager.html" class="link">Manager Panel</a> ·
+        <a href="/incoming-ship.html" class="link">Incoming Ship Screen</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Spinner Overlay -->
+  <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="flex flex-col items-center gap-3 text-white">
+      <svg class="w-12 h-12 animate-spin text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+      <p class="text-lg font-medium">Submitting...</p>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+  <script src="/js/index.js"></script>
+</body>
+</html>

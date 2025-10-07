@@ -1,0 +1,128 @@
+/* Harbour A Custom Theme */
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Glass card base */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Form styling */
+.form-group label {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  background-color: #f8fafc;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+  background-color: #ffffff;
+}
+
+/* Section headings */
+.section-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0369a1;
+  border-bottom: 2px solid #bae6fd;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  background-color: #0284c7;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #0369a1;
+  transform: scale(1.02);
+}
+
+/* Links */
+.link {
+  color: #0369a1;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: #0ea5e9;
+  text-decoration: underline;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card.bg-dark {
+  background: linear-gradient(145deg, rgba(15,23,42,0.85), rgba(30,64,175,0.4));
+  border: 1px solid rgba(147,197,253,0.2);
+  border-radius: 1rem;
+  backdrop-filter: blur(6px);
+}
+
+.card.bg-dark .card-title {
+  color: #7dd3fc;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.card.bg-dark .card-body {
+  line-height: 1.6;
+}
+
+.card.bg-dark .text-sky-400 {
+  color: #38bdf8 !important;
+}

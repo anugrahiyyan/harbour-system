@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Incoming Ship Display</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: radial-gradient(circle at top right, #1e3a8a, #0f172a 60%);
+      color: white;
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Background ship animation */
+    .bg-ship {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -10;
+    }
+    .bg-ship img {
+      position: absolute;
+      opacity: 0.15;
+      animation: floatShip 45s linear infinite;
+      width: 200px;
+      bottom: 10%;
+      left: -200px;
+    }
+    @keyframes floatShip {
+      0% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(120%) translateY(-8px); }
+      100% { transform: translateX(240%) translateY(0); }
+    }
+
+    .card.bg-dark {
+      background: linear-gradient(145deg, rgba(15,23,42,0.85), rgba(30,64,175,0.4));
+      border: 1px solid rgba(147,197,253,0.2);
+      border-radius: 1rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .card.bg-dark .card-title {
+      color: #7dd3fc;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .card.bg-dark .card-body {
+      line-height: 1.6;
+    }
+
+    .card.bg-dark:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .live-clock {
+      font-size: 1.1rem;
+      color: #7dd3fc;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-dark text-white position-relative">
+
+  <!-- Background ship animation -->
+  <div class="bg-ship">
+    <img src="/images/ship.gif" alt="Background Ship">
+  </div>
+
+  <!-- Access Code Screen -->
+  <div class="container vh-100 d-flex flex-column justify-content-center align-items-center text-center" id="codeScreen">
+    <h3 class="mb-3 text-info fw-bold">Enter One-Time Access Code</h3>
+    <input type="text" id="codeInput" maxlength="6" class="form-control text-center mb-3 shadow-sm" style="max-width:200px;">
+    <button id="codeSubmit" class="btn btn-primary px-4">
+      <i class="bi bi-door-open"></i> Access Screen
+    </button>
+  </div>
+
+  <!-- Display Screen -->
+  <div class="container py-5 d-none" id="displayScreen">
+    <div class="d-flex flex-column align-items-center mb-5">
+      <h2 class="text-center text-sky-400 fw-bold mb-2">🛳️ Approved Incoming Ships</h2>
+      <div class="live-clock" id="liveClock">Loading time...</div>
+    </div>
+
+    <div id="approvedShips" class="row g-4"></div>
+
+    <p class="text-center mt-5 text-secondary">
+      Auto-refreshing in <span id="refreshCountdown">30</span>s ⏳
+    </p>
+  </div>
+  <script src="/js/screen.js"></script>
+</body>
+</html>

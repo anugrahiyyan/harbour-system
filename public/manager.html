@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Harbour Manager</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { background: #f7fafc; font-family: 'Inter', sans-serif; }
+    .card { background: #0f172a; color: #e6eef8; }
+    .card-light { background: #fff; color: #0f172a; }
+    .accent { color: #0ea5e9; }
+    .muted { color: #94a3b8; }
+    .fade-in { animation: fadeIn .3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-30 bg-white/70 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-14">
+        <div class="flex items-center gap-3">
+          <span class="text-xl font-semibold accent">🛳️ Harbour Manager</span>
+          <nav class="ml-6 flex gap-2 text-sm">
+            <button id="navDashboard" class="px-3 py-1 rounded-md bg-slate-100 text-slate-900">Dashboard</button>
+            <button id="navHistory" class="px-3 py-1 rounded-md text-slate-700">History</button>
+          </nav>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="managerStatus" class="text-sm muted">Not signed in</div>
+          <button id="btnLogout" class="hidden px-3 py-1 rounded-md bg-red-600 text-white text-sm">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto p-6">
+    <!-- LOGIN VIEW -->
+    <section id="viewLogin" class="max-w-xl mx-auto mt-20">
+      <div class="card-light rounded-xl shadow p-6 text-center">
+        <h2 class="text-2xl font-semibold mb-4">Manager Login</h2>
+        <input id="inputPassword" type="password" placeholder="Enter manager password"
+               class="w-full border rounded px-3 py-2 mb-3" />
+        <div class="flex gap-3">
+          <button id="btnLogin" class="flex-1 bg-sky-600 text-white px-4 py-2 rounded">Sign in</button>
+          <button id="btnCheckSession" class="px-4 py-2 border rounded text-sm muted">Check session</button>
+        </div>
+        <p class="mt-3 text-sm muted">Login is required to manage approvals and access codes.</p>
+      </div>
+    </section>
+
+    <!-- APP SHELL -->
+    <section id="appShell" class="hidden">
+      <div id="viewDashboard" class="space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left -->
+          <div class="lg:col-span-8 space-y-4">
+            <div class="card rounded-xl p-4 shadow">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Pending Approvals</h3>
+                <button id="btnRefreshPending" class="text-sm px-3 py-1 rounded bg-slate-700/60 hover:bg-slate-600 transition">Refresh</button>
+              </div>
+              <div id="pendingContainer" class="mt-4 grid gap-4"></div>
+            </div>
+
+            <div class="card rounded-xl p-4 shadow">
+              <h3 class="text-lg font-semibold">Approved / Rejected</h3>
+              <div id="decidedContainer" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+            </div>
+          </div>
+
+          <!-- Right -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="card rounded-xl p-4 shadow">
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Access Codes</h3>
+                <button id="btnGenerateCode" class="bg-sky-500 px-3 py-1 rounded text-white text-sm">Generate</button>
+              </div>
+              <div id="codesContainer" class="mt-4 grid gap-3"></div>
+            </div>
+
+            <div class="card rounded-xl p-4 shadow">
+              <h3 class="text-lg font-semibold">Quick Stats</h3>
+              <div id="quickStats" class="mt-3 grid grid-cols-2 gap-3">
+                <div class="p-3 bg-slate-800 rounded text-center">
+                  <div class="text-sm muted">Pending</div>
+                  <div id="statPending" class="text-2xl font-bold">0</div>
+                </div>
+                <div class="p-3 bg-slate-800 rounded text-center">
+                  <div class="text-sm muted">Approved</div>
+                  <div id="statApproved" class="text-2xl font-bold">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div id="viewHistory" class="hidden">
+        <div class="card-light rounded-xl p-4 shadow">
+          <div class="flex items-center gap-3">
+            <input id="historyDate" type="date" class="border p-2 rounded" />
+            <button id="btnLoadHistory" class="bg-sky-600 text-white px-3 py-2 rounded">Load</button>
+            <button id="btnClearHistory" class="text-sm px-3 py-2 border rounded muted">Today</button>
+          </div>
+          <div class="mt-4 overflow-x-auto">
+            <table id="historyTable" class="min-w-full text-left">
+              <thead>
+                <tr class="text-sm muted">
+                  <th class="px-3 py-2">Time</th>
+                  <th class="px-3 py-2">Ship</th>
+                  <th class="px-3 py-2">Cargo</th>
+                  <th class="px-3 py-2">Amount</th>
+                  <th class="px-3 py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody id="historyTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Access Code Modal (Pure Tailwind, no Bootstrap) -->
+  <div id="codeModal" class="fixed inset-0 hidden items-center justify-center bg-black/70 backdrop-blur-sm z-50">
+    <div class="bg-slate-900 text-white rounded-2xl shadow-2xl w-full max-w-sm mx-auto p-6 text-center animate-[fadeIn_0.3s_ease]">
+      <h3 class="text-xl font-semibold text-sky-400 mb-4">✅ Access Code Generated</h3>
+      <div id="accessCodeDisplay" class="text-5xl font-bold text-sky-300 mb-2 tracking-widest">######</div>
+      <p id="accessExpireDisplay" class="text-sm text-slate-400 mb-6"></p>
+      <button id="btnCloseCodeModal" class="bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition">
+        <i class="bi bi-check2-circle"></i> OK
+      </button>
+    </div>
+  </div>
+
+  <script src="/js/manager.js" type="module"></script>
+</body>
+</html>
